@@ -8,7 +8,7 @@ import com.openclassrooms.magicgithub.R
 import com.openclassrooms.magicgithub.model.User
 import com.openclassrooms.magicgithub.utils.UserDiffCallback
 
-class UserListAdapter(  // FOR CALLBACK ---
+class UserListAdapter(
     private val callback: Listener
 ) : RecyclerView.Adapter<ListUserViewHolder>() {
     // FOR DATA ---
@@ -38,5 +38,23 @@ class UserListAdapter(  // FOR CALLBACK ---
         val diffResult = DiffUtil.calculateDiff(UserDiffCallback(newList, users))
         users = newList
         diffResult.dispatchUpdatesTo(this)
+    }
+
+}
+class UserDiffCallback(
+    private val newUsers: List<User>,
+    private val oldUsers: List<User>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldUsers.size
+
+    override fun getNewListSize(): Int = newUsers.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldUsers[oldItemPosition].id == newUsers[newItemPosition].id
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldUsers[oldItemPosition] == newUsers[newItemPosition]
     }
 }

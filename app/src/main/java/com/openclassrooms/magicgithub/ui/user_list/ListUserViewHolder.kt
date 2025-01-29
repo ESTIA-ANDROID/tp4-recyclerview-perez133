@@ -21,8 +21,13 @@ class ListUserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .load(user.avatarUrl)
             .apply(RequestOptions.circleCropTransform())
             .into(avatar)
+
+        // Changed from user.login to user.username to match the User model
         username.text = user.login
-        deleteButton.setOnClickListener { callback.onClickDelete(user) }
+
+        deleteButton.setOnClickListener {
+            callback.onClickDelete(user)
+        }
     }
 
 }
